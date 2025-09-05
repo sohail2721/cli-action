@@ -19,10 +19,10 @@ jobs:
           node-version: '18'
       
       - name: Install APImatic CLI
-        run: npm install @apimatic/cli
+        run: npm install -g @apimatic/cli
       
       - name: Generate portal
-        run: npx apimatic portal:generate --zip --authkey="${{ secrets.AUTHKEY }}"
+        run: apimatic portal:generate --zip --authkey="${{ secrets.AUTHKEY }}"
         env:
           AUTHKEY: ${{ secrets.AUTHKEY }}
       
