@@ -22,13 +22,11 @@ jobs:
         run: npm install -g @apimatic/cli@1.1.0-alpha.21
       
       - name: Generate portal
-        run: apimatic portal:generate --zip --auth-key=${{ secrets.AUTHKEY }}
-        env:
-          AUTHKEY: ${{ secrets.AUTHKEY }}
+        run: apimatic portal:generate --auth-key=${{ secrets.AUTHKEY }} --destination="./generated-portal"
       
       - name: Upload portal artifact
         uses: actions/upload-artifact@v4
         with:
           name: generated-portal
-          path: /home/runner/work/cli-action/cli-action/portal
+          path: ./generated-portal
           retention-days: 7
