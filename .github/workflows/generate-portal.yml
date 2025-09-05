@@ -1,0 +1,35 @@
+name: Generate APImatic Portal
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-portal:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v4
+        with:
+          ref: master
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install APImatic CLI
+        run: npm install @apimatic/cli
+      
+      - name: Generate portal
+        run: npx apimatic portal:generate --zip --authkey="${{ secrets.AUTHKEY }}"
+        env:
+          AUTHKEY: ${{ secrets.AUTHKEY }}
+      
+      - name: Upload portal artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-portal
+          path: generatedportal/portal.zip
+          retention-days: 7
