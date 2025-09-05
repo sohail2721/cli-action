@@ -21,11 +21,11 @@ jobs:
       - name: Install APImatic CLI
         run: npm install -g @apimatic/cli@1.1.0-alpha.21
 
-      - name: Create generated-portal directory
-        run: mkdir -p ./generated-portal
-
       - name: Generate portal
-        run: apimatic portal:generate --auth-key=${{ secrets.AUTHKEY }} --destination="./generated-portal"
+        run: apimatic portal:generate --auth-key=${{ secrets.AUTHKEY }}
+      
+      - name: Move portal to generated-portal
+        run: mv ./portal ./generated-portal
       
       - name: Upload portal artifact
         uses: actions/upload-artifact@v4
